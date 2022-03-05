@@ -12,4 +12,4 @@ ADD . /app
 WORKDIR /app
 EXPOSE 4000
 
-CMD ["/app/entrypoint.sh"]
+#CMD ["/app/entrypoint.sh"]
