@@ -129,7 +129,7 @@ $ docker-compose stop
 
 あなたの参加を熱烈歓迎いたします:tada:
 
-2022/3/6追記
+## 2022/3/6追記
 
 以下のコマンドでPhoenix1.6コンテナ環境を構築できます。
 
@@ -154,7 +154,9 @@ cd realworld-kansei
 ```
 
 以下のURLサイトを参照する。
+
 http://localhost:4000/articles
+
 にアクセスをしてください。
 
 
