@@ -137,7 +137,7 @@ $ docker-compose stop
 curl -L -o temp.zip https://github.com/naritomo08/realworld-1/archive/refs/heads/naritomo-devlop.zip
 unzip temp.zip
 rm temp.zip
-mv naritomo-devlop ex-v03
+mv realworld-1-naritomo-devlop ex-v03
 cd ex-v03
 
 sudo bin/setup.sh
