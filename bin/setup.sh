@@ -6,7 +6,7 @@ docker-compose stop
 rm -rf _build deps
 
 BUILD_CMD="docker-compose build --no-cache"
-CONTAINER_NAME="web postgres mariadb"
+CONTAINER_NAME="web db"
 
 case "$OSTYPE" in
   darwin*)

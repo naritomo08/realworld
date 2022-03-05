@@ -2,10 +2,12 @@ version: '3'
 services:
   web:
     build: .
+    command: bash
     ports:
       - '4000:4000'
     volumes:
-      - .:/app
+      - ./apps:/apps
+    working_dir: /apps
     environment:
       WEB_DB_PRESS_VOL_127_DB_HOST: db
     depends_on:
