@@ -128,3 +128,33 @@ $ docker-compose stop
 ぜひ飛び込んできてください。
 
 あなたの参加を熱烈歓迎いたします:tada:
+
+2022/3/6追記
+
+以下のコマンドでPhoenix1.6コンテナ環境を構築できます。
+
+```
+curl -L -o temp.zip https://github.com/naritomo08/realworld-1/archive/refs/heads/naritomo-devlop.zip
+unzip temp.zip
+rm temp.zip
+mv naritomo-devlop ex-v03
+cd ex-v03
+
+sudo bin/setup.sh
+sudo bin/start.sh
+sudo bin/login.sh
+```
+
+
+本環境でのアプリ立ち上げ
+
+```
+cd realworld-kansei
+./entrypoint.sh
+```
+
+以下のURLサイトを参照する。
+http://localhost:4000/articles
+にアクセスをしてください。
+
+

@@ -4,7 +4,7 @@ import Config
 config :realworld, Realworld.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: System.get_env("WEB_DB_PRESS_VOL_127_DB_HOST", "localhost"),
+  hostname: "db",
   database: "realworld_dev",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

@@ -8,8 +8,8 @@ RUN mix local.hex --force && \
   mix archive.install hex phx_new --force && \
   mix local.rebar --force
 
-ADD . /app
-WORKDIR /app
-EXPOSE 4000
+#ADD . /apps
+#WORKDIR /apps
+#EXPOSE 4000
 
 #CMD ["/app/entrypoint.sh"]
