@@ -1,7 +1,7 @@
 FROM hexpm/elixir:1.13.1-erlang-24.2.1-debian-bullseye-20210902-slim
 
 RUN apt-get update && \
-    apt-get install --yes build-essential inotify-tools postgresql-client git && \
+    apt-get install --yes build-essential inotify-tools postgresql-client git sudo && \
     apt-get clean
 
 RUN mix local.hex --force && \
