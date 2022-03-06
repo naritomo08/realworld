@@ -181,28 +181,35 @@ config/test.exs
 
 gigalixirによるデプロイ方法
 
+```
 *DBはpostgresqlで作っていること。
-*作業対象フォルダに対し、git commitしていること。
+*作業対象フォルダに対し、git commitしていること
 *作業前にbranchからmainにマージすること。(別ブランチで作成している場合)
 *mainに切り替えておくこと。(別ブランチで作成している場合)
 *gigalixirサイトで登録を実施しておくこと。
 https://www.gigalixir.com/
 *無料プランの場合、appが1つしか立ち上げられない。
 *何かソース自体更新しておく必要がある。
+```
 
-2回目以降のデプロイは,1→7(9)→10の作業でデプロイ可能
+2回目以降のデプロイは,1→7(9)→10の作業でデプロイ可能。
+
 コンテナ自体再立ち上げした際は全項目実施。
 
 本作業はコンテナ内で実施する必要ない。
+
 ホスト側で行う場合、1の作業は必要なし。
 
 1 gigalixirCLIインストール(gigalixirコマンド使えない場合)
 
+```
 sudo apt-get update
 sudo apt-get install -y python3 python3-pip git-core curl
 
 pip3 install gigalixir --user
+```
 
+```
 *失敗した場合
 -----------------------------------
 pip3 show cryptography
@@ -213,19 +220,24 @@ pip3 install --upgrade pip
 
 pip3 install gigalixir --user
 -----------------------------------
+```
 
+```
 echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
+```
 
 gigalixir
 →コマンドが使えることを確認する。
 
+```
 *再コンテナログイン時など、2回目以降にgigalixirコマンドを使用できない場合、以下のコマンドを入力する。
 echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
 
 gigalixir
 →コマンドが使えることを確認する。
+```
 
 2 gigalixirログイン設定(すでに設定済みの場合不要)
 
