@@ -145,12 +145,14 @@ sudo bin/start.sh
 sudo bin/login.sh
 ```
 
-
-本環境でのアプリ立ち上げ
+本環境でのサンプルアプリ立ち上げ
 
 ```
 cd realworld-kansei
 ./entrypoint.sh
+または
+mix ecto.reset
+mix phx.server
 ```
 
 以下のURLサイトを参照する。
@@ -158,5 +160,21 @@ cd realworld-kansei
 http://localhost:4000/articles
 
 にアクセスをしてください。
+
+プロジェクト導入後、以下の変更は実施すること。
+
+config/dev.exs
+
+7行目
+  hostname: "db",
+
+
+21行目
+  http: [ip: {0, 0, 0, 0}, port: 4000],
+
+config/test.exs
+
+11行目
+  hostname: "db",
 
 
