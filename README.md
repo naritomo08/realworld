@@ -177,4 +177,175 @@ config/test.exs
 11行目
   hostname: "db",
 
+## 2022/3/6追記その2
+
+gigalixirによるデプロイ方法
+
+*DBはpostgresqlで作っていること。
+*作業対象フォルダに対し、git commitしていること。
+*作業前にbranchからmainにマージすること。(別ブランチで作成している場合)
+*mainに切り替えておくこと。(別ブランチで作成している場合)
+*gigalixirサイトで登録を実施しておくこと。
+https://www.gigalixir.com/
+*無料プランの場合、appが1つしか立ち上げられない。
+*何かソース自体更新しておく必要がある。
+
+2回目以降のデプロイは,1→7(9)→10の作業でデプロイ可能
+コンテナ自体再立ち上げした際は全項目実施。
+
+本作業はコンテナ内で実施する必要ない。
+ホスト側で行う場合、1の作業は必要なし。
+
+1 gigalixirCLIインストール(gigalixirコマンド使えない場合)
+
+sudo apt-get update
+sudo apt-get install -y python3 python3-pip git-core curl
+
+pip3 install gigalixir --user
+
+*失敗した場合
+-----------------------------------
+pip3 show cryptography
+
+Location:を確認し、その中に入る該当名フォルダを削除
+
+pip3 install --upgrade pip
+
+pip3 install gigalixir --user
+-----------------------------------
+
+echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile
+source ~/.bash_profile
+
+gigalixir
+→コマンドが使えることを確認する。
+
+*再コンテナログイン時など、2回目以降にgigalixirコマンドを使用できない場合、以下のコマンドを入力する。
+echo 'export PATH=~/.local/bin:$PATH' >> ~/.bash_profile
+source ~/.bash_profile
+
+gigalixir
+→コマンドが使えることを確認する。
+
+2 gigalixirログイン設定(すでに設定済みの場合不要)
+
+gigalixir login
+
+gigalixir account
+
+3 gigalixirアプリ作成
+
+gigalixir create -n {unique_name}
+*-nパラメータは入れなくてもよい。
+
+gigalixir apps
+→unique_nameを控える。
+
+4 DB作成(必要に応じ)
+
+gigalixir pg:create --free -a {unique_name}
+
+5 デプロイソース準備(初回のみ)
+
+elixir -v
+node -v
+
+echo "elixir_version=1.12.3(Elixirバージョン)" > elixir_buildpack.config
+echo "erlang_version=24.0(Erlandバージョン)" >> elixir_buildpack.config
+echo "node_version=14.17.6(nodeバージョン)" > phoenix_static_buildpack.config
+
+vi config/prod.exs
+
+12行目あたり。
+
+config :piyopiyoex3_sample_portfolio, Piyopiyoex3SamplePortfolioWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
+#　↓ 書き換える
+config :sample_portfolio, SamplePortfolioWeb.Endpoint,
+  url: [host: "{アプリのunique_name}.gigalixirapp.com"],
+  check_origin: ["//{アプリのunique_name}.gigalixirapp.com"],
+  cache_static_manifest: "priv/static/cache_manifest.json"
+
+作業実施後、コミットも実施すること。
+
+6 git準備
+
+gigalixir git:remote {unique_name}
+
+git remote -v
+→gigalixir登録がされていること。
+
+7 appデプロイ
+
+git push gigalixir main
+→エラーなく動くこと。
+
+8 ssh公開鍵設定(DBを使う場合、初回(コンテナ立ち上げ時)のみ)
+
+ssh-keygen -t rsa
+→すべての問いに対し[Enter]をする。
+
+cat ~/.ssh/id_rsa.pub
+→表示されるssh公開鍵文字列を控える。
+→ファイルがない場合、前の手順に戻って作成すること。
+
+gigalixir account:ssh_keys:add "【ssh公開鍵文字列】"
+
+gigalixir account:ssh_keys
+→公開鍵が表示されることを確認する。
+→前使用したキーもある場合、管理画面から削除すること。
+
+9 DBマイグレート(必要に応じ)
+
+初回:
+gigalixir run mix ecto.migrate
+gigalixir run mix run priv/repo/seeds.exs
+
+2回目以降：
+gigalixir run mix ecto.reset
+
+gigalixir logs
+→DBの状況を確認する。
+
+10 サイト確認
+
+gigalixir ps
+→アプリのステータスがHealthyになること。
+
+gigalixir open
+→出てきたURLのサイトを参照できること。
+　gigalixirサイトからURL参照可能。
+
+## 2022/3/6追記その2
+
+gigaklixirサイト削除
+
+＊予めgigalixirコマンドを使用できるようにすること。
+
+1 appステータス確認
+
+gigalixirサイトでapp,DB状態を確認する。
+https://www.gigalixir.com/
+
+アプリ名(unique_name)を控える。
+
+2 DB削除(DB利用の場合)
+
+gigalixir ps:scale --replicas=0 -a {unique_name}
+
+gigalixir管理画面からDBを削除する。
+
+3 app削除
+
+gigalixir ps:scale --replicas=0 -a {unique_name}
+→7.2の作業をしていない場合、上記のコマンドを入力。
+
+gigalixir管理画面からappを削除する。
+
+4 gitリポジトリ設定削除
+
+git remote remove gigalixir
+
+git remote -v
+→gitのgigalixir登録が消えていること。
+
 
