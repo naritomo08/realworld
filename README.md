@@ -368,7 +368,7 @@ gigalixir管理画面からDBを削除する。
 
 ```
 gigalixir ps:scale --replicas=0 -a {unique_name}
-→7.2の作業をしていない場合、上記のコマンドを入力。
+→2の作業をしていない場合、上記のコマンドを入力。
 
 gigalixir管理画面からappを削除する。
 ```
