@@ -181,7 +181,6 @@ config/test.exs
 
 gigalixirによるデプロイ方法
 
-
   * DBはpostgresqlで作っていること。
   * 作業対象フォルダに対し、git commitしていること
   * 作業前にbranchからmainにマージすること。(別ブランチで作成している場合)
