@@ -8,10 +8,13 @@ RUN mix local.hex --force && \
   mix archive.install hex phx_new --force && \
   mix local.rebar --force
 
-#RUN pip3 install gigalixir --user
+ARG UID=1000
+ARG GID=1000
 
-#ADD . /apps
-#WORKDIR /apps
-#EXPOSE 4000
+RUN groupadd -g $GID devel
+RUN useradd -u $UID -g devel -m devel
+RUN echo "devel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-CMD ["/apps/entrypoint.sh"]
+COPY --chown=devel:devel ./apps /apps
+
+USER devel
