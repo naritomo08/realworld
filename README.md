@@ -280,6 +280,17 @@ config :sample_portfolio, SamplePortfolioWeb.Endpoint,
   check_origin: ["//{アプリのunique_name}.gigalixirapp.com"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+Phoenix1.6以降の場合
+
+以下のファイルを作成する。
+assets/package.json
+
+{
+  "scripts": {
+    "deploy": "cd .. && mix assets.deploy && rm -f _build/esbuild" 
+  } 
+}
+
 作業実施後、コミットも実施すること。
 ```
 
