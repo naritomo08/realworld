@@ -373,6 +373,13 @@ https://www.gigalixir.com/
 gigalixir ps:scale --replicas=0 -a {unique_name}
 
 gigalixir管理画面からDBを削除する。
+
+コマンドから消す場合:
+
+gigalixir pg -a {unique_name}
+→idを控える
+
+gigalixir pg:destroy -d {id} -a {unique_name}
 ```
 
 3 app削除
@@ -382,6 +389,10 @@ gigalixir ps:scale --replicas=0 -a {unique_name}
 →2の作業をしていない場合、上記のコマンドを入力。
 
 gigalixir管理画面からappを削除する。
+
+コマンドから消す場合:
+
+gigalixir apps:destroy -a {unique_name}
 ```
 
 4 gitリポジトリ設定削除
